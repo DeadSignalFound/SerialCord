@@ -30,7 +30,7 @@ import { Margins } from "@utils/margins";
 import { classes, isObjectEmpty } from "@utils/misc";
 import { ModalCloseButton, ModalContent, ModalHeader, ModalProps, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import { OptionType, Plugin } from "@utils/types";
-import { User } from "@vencord/discord-types";
+import { User } from "@serialcord/discord-types";
 import { findCssClassesLazy } from "@webpack";
 import { Clickable, FluxDispatcher, Forms, React, Text, Tooltip, useEffect, useMemo, UserStore, UserSummaryItem, UserUtils, useState } from "@webpack/common";
 import { Constructor } from "type-fest";
@@ -167,7 +167,7 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
                             <div className="vc-settings-modal-links">
                                 <WebsiteButton
                                     text="View more info"
-                                    href={`https://vencord.dev/plugins/${plugin.name}`}
+                                    href={`https://serialcord.dev/plugins/${plugin.name}`}
                                 />
                                 <GithubButton
                                     text="View source code"

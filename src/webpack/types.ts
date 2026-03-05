@@ -1,6 +1,6 @@
 /*
- * Vencord, a Discord client mod
- * Copyright (c) 2025 Vendicated, Nuckyz and contributors
+ * SerialCord, a Discord client mod
+ * Copyright (c) 2026 DeadSignalFound and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 

@@ -18,7 +18,7 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { BackupRestoreIcon, CloudIcon, MainSettingsIcon, PaintbrushIcon, PatchHelperIcon, PlaceholderIcon, PluginsIcon, UpdaterIcon, VesktopSettingsIcon } from "@components/Icons";
-import { BackupAndRestoreTab, CloudTab, PatchHelperTab, PluginsTab, ThemesTab, UpdaterTab, VencordTab } from "@components/settings/tabs";
+import { BackupAndRestoreTab, CloudTab, PatchHelperTab, PluginsTab, ThemesTab, UpdaterTab, SerialCordTab } from "@components/settings/tabs";
 import { Devs } from "@utils/constants";
 import { isTruthy } from "@utils/guards";
 import definePlugin, { IconProps, OptionType } from "@utils/types";
@@ -210,52 +210,51 @@ export default definePlugin({
         if (originalLayoutBuilder.key !== "$Root") return layout;
         if (!Array.isArray(layout)) return layout;
 
-        if (layout.some(s => s?.key === "vencord_section")) return layout;
+        if (layout.some(s => s?.key === "serialcord_section")) return layout;
 
         const { buildEntry } = this;
 
-        const vencordEntries: SettingsLayoutNode[] = [
+        const serialCordEntries: SettingsLayoutNode[] = [
             buildEntry({
-                key: "vencord_main",
-                title: "Vencord",
-                panelTitle: "Vencord Settings",
-                Component: VencordTab,
+                key: "serialcord_main",
+                title: "SerialCord",
+                panelTitle: "SerialCord Settings",
+                Component: SerialCordTab,
                 Icon: MainSettingsIcon
             }),
             buildEntry({
-                key: "vencord_plugins",
-                title: "Plugins",
+                key: "serialcord_plugins", title: "Plugins",
                 Component: PluginsTab,
                 Icon: PluginsIcon
             }),
             buildEntry({
-                key: "vencord_themes",
+                key: "serialcord_themes",
                 title: "Themes",
                 Component: ThemesTab,
                 Icon: PaintbrushIcon
             }),
             !IS_UPDATER_DISABLED && UpdaterTab && buildEntry({
-                key: "vencord_updater",
+                key: "serialcord_updater",
                 title: "Updater",
-                panelTitle: "Vencord Updater",
+                panelTitle: "SerialCord Updater",
                 Component: UpdaterTab,
                 Icon: UpdaterIcon
             }),
             buildEntry({
-                key: "vencord_cloud",
+                key: "serialcord_cloud",
                 title: "Cloud",
-                panelTitle: "Vencord Cloud",
+                panelTitle: "SerialCord Cloud",
                 Component: CloudTab,
                 Icon: CloudIcon
             }),
             buildEntry({
-                key: "vencord_backup_restore",
+                key: "serialcord_backup_restore",
                 title: "Backup & Restore",
                 Component: BackupAndRestoreTab,
                 Icon: BackupRestoreIcon
             }),
             IS_DEV && PatchHelperTab && buildEntry({
-                key: "vencord_patch_helper",
+                key: "serialcord_patch_helper",
                 title: "Patch Helper",
                 Component: PatchHelperTab,
                 Icon: PatchHelperIcon
@@ -275,11 +274,11 @@ export default definePlugin({
             })
         ].filter(isTruthy);
 
-        const vencordSection: SettingsLayoutNode = {
-            key: "vencord_section",
+        const serialCordSection: SettingsLayoutNode = {
+            key: "serialcord_section",
             type: LayoutTypes.SECTION,
-            useTitle: () => "Vencord Settings",
-            buildLayout: () => vencordEntries
+            useTitle: () => "SerialCord Settings",
+            buildLayout: () => serialCordEntries
         };
 
         const { settingsLocation } = settings.store;
@@ -302,7 +301,7 @@ export default definePlugin({
             idx += 1;
         }
 
-        layout.splice(idx, 0, vencordSection);
+        layout.splice(idx, 0, serialCordSection);
 
         return layout;
     },

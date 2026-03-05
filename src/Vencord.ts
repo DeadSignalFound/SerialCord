@@ -1,6 +1,6 @@
 /*!
- * Vencord, a modification for Discord's desktop app
- * Copyright (c) 2022 Vendicated and contributors
+ * SerialCord, a modification for Discord's desktop app
+ * Copyright (c) 2026 DeadSignalFound and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,15 +52,15 @@ if (IS_REPORTER) {
 }
 
 async function syncSettings() {
-    if (localStorage.Vencord_cloudSyncDirection === undefined) {
+    if (localStorage.SerialCord_cloudSyncDirection === undefined) {
         // by default, sync bi-directionally
-        localStorage.Vencord_cloudSyncDirection = "both";
+        localStorage.SerialCord_cloudSyncDirection = "both";
     }
 
     // pre-check for local shared settings
     if (
         Settings.cloud.authenticated &&
-        !await dsGet("Vencord_cloudSecret") // this has been enabled due to local settings share or some other bug
+        !await dsGet("SerialCord_cloudSecret") // this has been enabled due to local settings share or some other bug
     ) {
         // show a notification letting them know and tell them how to fix it
         showNotification({
@@ -68,7 +68,7 @@ async function syncSettings() {
             body: "We've noticed you have cloud integrations enabled in another client! Due to limitations, you will " +
                 "need to re-authenticate to continue using them. Click here to go to the settings page to do so!",
             color: "var(--yellow-360)",
-            onClick: () => SettingsRouter.openUserSettings("vencord_cloud_panel")
+            onClick: () => SettingsRouter.openUserSettings("serialcord_cloud_panel")
         });
         return;
     }
@@ -76,9 +76,9 @@ async function syncSettings() {
     if (
         Settings.cloud.settingsSync && // if it's enabled
         Settings.cloud.authenticated && // if cloud integrations are enabled
-        localStorage.Vencord_cloudSyncDirection !== "manual" // if we're not in manual mode
+        localStorage.SerialCord_cloudSyncDirection !== "manual" // if we're not in manual mode
     ) {
-        if (localStorage.Vencord_settingsDirty && shouldCloudSync("push")) {
+        if (localStorage.SerialCord_settingsDirty && shouldCloudSync("push")) {
             await putCloudSettings();
         } else if (shouldCloudSync("pull") && await getCloudSettings(false)) { // if we synchronized something (false means no sync)
             // we show a notification here instead of allowing getCloudSettings() to show one to declutter the amount of
@@ -101,7 +101,7 @@ async function syncSettings() {
     }, 60_000);
 
     SettingsStore.addGlobalChangeListener(() => {
-        localStorage.Vencord_settingsDirty = true;
+        localStorage.SerialCord_settingsDirty = true;
         saveSettingsOnFrequentAction();
     });
 }
@@ -130,7 +130,7 @@ async function runUpdateCheck() {
             await update();
             if (Settings.autoUpdateNotification) {
                 notify({
-                    title: "Vencord has been updated!",
+                    title: "SerialCord has been updated!",
                     body: "Click here to restart",
                     onClick: relaunch
                 });
@@ -139,7 +139,7 @@ async function runUpdateCheck() {
         }
 
         notify({
-            title: "A Vencord update is available!",
+            title: "A SerialCord update is available!",
             body: "Click here to view the update",
             onClick: () => openSettingsTabModal(UpdaterTab!)
         });
@@ -170,7 +170,7 @@ async function init() {
                 "Webpack has finished initialising, but some patches haven't been applied yet.",
                 "This might be expected since some Modules are lazy loaded, but please verify",
                 "that all plugins are working as intended.",
-                "You are seeing this warning because this is a Development build of Vencord.",
+                "You are seeing this warning because this is a Development build of SerialCord.",
                 "\nThe following patches have not been applied:",
                 "\n\n" + pendingPatches.map(p => `${p.plugin}: ${p.find}`).join("\n")
             );
@@ -187,6 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // FIXME
     if (IS_DISCORD_DESKTOP && Settings.winNativeTitleBar && IS_WINDOWS) {
-        createAndAppendStyle("vencord-native-titlebar-style", coreStyleRootNode).textContent = "[class*=titleBar]{display: none!important}";
+        createAndAppendStyle("serialcord-native-titlebar-style", coreStyleRootNode).textContent = "[class*=titleBar]{display: none!important}";
     }
 }, { once: true });
