@@ -1,4 +1,4 @@
-// Vencord 12da7a08
+// Vencord 2f238d85
 // Standalone: false
 // Platform: linux
 // Updater Disabled: false
